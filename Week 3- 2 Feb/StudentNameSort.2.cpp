@@ -28,6 +28,9 @@ void displayNames(const string[], int);
 int searchNames(const string[], int, const string &);
 void bubbleSort(string[], int);
 void bubbleSortDescending(string[], int);
+int binarySearchNames(const string[], int, const string &);
+void selectionSort(string[], int);
+void selectionSortDescending(string[], int);
 
 //global declarations
 const int ARR_SIZE = 10;
@@ -51,15 +54,27 @@ int main()
     readNames(inputFile, names, ARR_SIZE);
     inputFile.close();
 
+    //output the current names from the file
     displayNames(names, ARR_SIZE);
 
+    //user input to search
     cout << "\nPlease enter a name: ";
     getline(cin, searchName);
 
+    //pass user input to search
     arrayIndex = searchNames(names, ARR_SIZE, searchName);
 
+    //Bubble sort the names and display them
     bubbleSort(names, ARR_SIZE);
+
+    //Do a binary search on the name
+    arrayIndex = binarySearchNames(names, ARR_SIZE, searchName);
+
+    //Bubble sort the names descending
     bubbleSortDescending(names, ARR_SIZE);
+
+    //Selection sort the names
+    selectionSort(names, ARR_SIZE);
 
     return 0;
 }
@@ -147,11 +162,22 @@ int binarySearchNames(const string names[], int numNames, const string &name)
             found = true;
             index = middle;
         }
+        else if (name > names[middle])
+        {
+            first = middle + 1;
+        }
+        else if (name < names[middle])
+        {
+            last = middle - 1;
+        }
     }
-
-    {
-        /* code */
-    }
-
     return index;
+}
+
+void selectionSort(string names[], int numNames)
+{
+
+    for (int i = 0; i < numNames - 1; ++i)
+    {
+    }
 }
