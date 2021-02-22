@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "COSC 1560",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"iostream": "cpp"
+		}
+	}
+}
