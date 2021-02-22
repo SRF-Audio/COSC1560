@@ -1,9 +1,9 @@
 //****************************************************************************************************
 //
-// File: 
+// File:
 // Student: Stephen Froeber
-// Assignment: 
-// Course Name: Programming II 
+// Assignment:
+// Course Name: Programming II
 // Course Number: COSC 1560
 // Due:
 //
@@ -13,3 +13,17 @@
 // 1. studentFile.txt – text file of Student data
 // 2. student.h – definition of the Student struct
 //****************************************************************************************************
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    string TA;
+    string *T = &TA;
+
+    *T = "What's this all about, eh?";
+
+    cout << TA;
+}
