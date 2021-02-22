@@ -76,6 +76,8 @@ int main()
     //Selection sort the names
     selectionSort(names, ARR_SIZE);
 
+    selectionSortDescending(names, ARR_SIZE);
+
     return 0;
 }
 
@@ -176,8 +178,40 @@ int binarySearchNames(const string names[], int numNames, const string &name)
 
 void selectionSort(string names[], int numNames)
 {
-
-    for (int i = 0; i < numNames - 1; ++i)
+    int minIndex;
+    string minValue;
+    for (int start = 0; start < numNames - 1; ++start)
     {
+        minIndex = start;
+        minValue = names[start];
+        for (int index = start + 1; index < numNames; ++index)
+        {
+            if (names[start] < minValue)
+            {
+                minValue = names[start];
+                minIndex = index;
+            }
+        }
+        swap(names[minIndex], names[start]);
+    }
+}
+
+void selectionSortDescending(string names[], int numNames)
+{
+    int maxIndex;
+    string maxValue;
+    for (int start = numNames - 1; start >= 0; --start)
+    {
+        maxIndex = start;
+        maxValue = names[start];
+        for (int index = start - 1; index > 0; --index)
+        {
+            if (names[start] > maxValue)
+            {
+                maxValue = names[start];
+                maxIndex = index;
+            }
+        }
+        swap(names[maxIndex], names[start]);
     }
 }
