@@ -151,39 +151,56 @@ using namespace std;
 //         cin >> worker.projects[i];
 //     }
 
+// //     cout << worker.joinDate.year;
+
+// // }
+
+// //Q7
+
+// struct Date
+// {
+//     int day;
+//     int month;
+//     int year;
+// };
+
+// struct Employee
+// {
+//     string name;
+//     int age;
+//     string projects[3];
+//     Date joinDate;
+// };
+
+// int main()
+// {
+//     Employee worker;
+
+//     for (int i = 0; i < 3; i++)
+//     {
+//         cout << "Please enter a project name: " << endl;
+//         cin >> worker.projects[i];
+//     }
+
 //     cout << worker.joinDate.year;
 
+//     Employee employees[5];
+//     cin >> employees[0].name;
 // }
 
-//Q7
-
-struct Date
+struct Scissors
 {
-    int day;
-    int month;
-    int year;
+    int scissor[2];
 };
-
-struct Employee
-{
-    string name;
-    int age;
-    string projects[3];
-    Date joinDate;
-};
-
 int main()
 {
-    Employee worker;
-
-    for (int i = 0; i < 3; i++)
+    Scissors scissors[2];
+    for (int i = 0; i < 2; i++)
     {
-        cout << "Please enter a project name: " << endl;
-        cin >> worker.projects[i];
+        for (int j = 0; i < 2; j++)
+        {
+            scissors[i].scissor[j] = 1;
+        }
     }
-
-    cout << worker.joinDate.year;
-
-    Employee employees[5];
-    cin >> employees[0].name;
+    return 0;
 }
