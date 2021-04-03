@@ -18,28 +18,6 @@
 #include <string>
 using namespace std;
 
-struct Date
-
-{
-
-    int day;
-
-    int month;
-
-    int year;
-};
-
-struct Exam
-
-{
-
-    string name;
-
-    Date dateScheduled;
-
-    int numStudents;
-};
-
 /*
 a)  Create a dynamically allocated array of 10 Exams.
 
@@ -50,11 +28,4 @@ c)  Set a pointer to the 3rd element of the array, and assign “1/2/2021” as 
 
 int main()
 {
-    Exam *e;
-    e = new Exam[10];
-    e[1].name = "Chemistry";
-    Exam *three = &e[2];
-    three->dateScheduled.day = 1;
-    three->dateScheduled.month = 2;
-    three->dateScheduled.year = 2021;
 }
