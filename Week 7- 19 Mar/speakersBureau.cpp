@@ -17,6 +17,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+
 using namespace std;
 
 struct Speaker
@@ -40,12 +41,16 @@ int main()
 
     //get user input and validate it
     cout << "\nHow many speakers do you have? ";
+    cin.clear();
     cin >> userSpeakers;
+    cin.ignore();
 
     while (userSpeakers < 1)
     {
         cout << "\nYou must enter at least one speaker: ";
+        cin.clear();
         cin >> userSpeakers;
+        cin.ignore();
     }
 
     dataEntry(speakerList, SPEAKERS, userSpeakers);
@@ -55,7 +60,8 @@ int main()
 
 void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers)
 {
-
+    bool isNumber = true;
+    int numDigits = 10;
     //populate the structure array with the user selected number of speakers
     for (int i = 0; i < userSpeakers; i++)
     {
@@ -64,52 +70,62 @@ void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers)
 
         //name block
         cout << "Speaker " << userDisplay << "'s name: ";
+        cin.clear();
         getline(cin, speakerList[i].name);
+        cin.ignore();
 
         //name validation
-        while (sizeof(speakerList[i].name) == 0)
+
+        if (speakerList[i].name.length() != numDigits)
         {
-            cout << "\nYou must enter a name: ";
-            getline(cin, speakerList[i].name);
+            while (speakerList[i].name.length() != numDigits)
+            {
+                cout << "\nYou must enter a name: ";
+                cin.clear();
+                getline(cin, speakerList[i].name);
+                cin.ignore();
+            }
         }
 
         //Phone Number block
-        cout << "Speaker " << userDisplay << "'s phone number (enter 10 digits, no dashes or hyphens): ";
+        cout << "\nEnter " << speakerList[i].name << "'s phone number (enter 10 digits, with no dashes or hyphens): ";
+        cin.clear();
         getline(cin, speakerList[i].phoneNumber);
+        cin.ignore();
 
         //Phone number validation block
-        bool numTest = true;
-        do
-        {
-            //test for the correct number of digits
-            while (sizeof(speakerList[i].phoneNumber) != 10)
-            {
-                cout << "\nPlease enter exactly 10 digits, with no spaces, hyphens, or parentheses: ";
-                getline(cin, speakerList[i].phoneNumber);
-            }
-            //test to make sure they are numbers
-            while (numTest == false)
-            {
-                numTest = true;
-                for (int j = 0; j <= sizeof(speakerList[i].phoneNumber); j++)
-                {
-                    if (isdigit(speakerList[i].phoneNumber.at(j) == false))
-                    {
-                        numTest = false;
-                        break;
-                    }
-                }
-                cout << "\nPlease enter exactly 10 digits, with no spaces, hyphens, or parentheses: ";
-                getline(cin, speakerList[i].phoneNumber);
-            }
 
-        } while (sizeof(speakerList[i].phoneNumber) != 10 || numTest == false);
+        //test for the correct number of digits
+        if (speakerList[i].phoneNumber.length() != numDigits)
+        {
+            while (speakerList[i].phoneNumber.length() != numDigits)
+            {
+                cout << "\nPlease enter exactly 10 digits, with no spaces, hyphens, or parentheses: ";
+                cin.clear();
+                getline(cin, speakerList[i].phoneNumber);
+                cin.ignore();
+            }
+        }
+        //test to make sure they are numbers
+        for (int j = 0; j < speakerList[i].phoneNumber.length(); j++)
+        {
+            if (!isdigit(speakerList[i].phoneNumber.at(j)))
+            {
+                int temp;
+                while (!isdigit(speakerList[i].phoneNumber.at(j)))
+                {
+                    cout << "\nCharacter " << j + 1 << " is not a number. Enter the correct number: ";
+                    cin.clear();
+                    cin >> temp;
+                }
+                speakerList[i].phoneNumber.replace(j, 1, temp);
+            }
+        }
 
         //US phone number formatter
         speakerList[i].phoneNumber.insert(0, "(");
-        speakerList[i].phoneNumber.insert(3, ") ");
-        speakerList[i].phoneNumber.insert(8, "-");
+        speakerList[i].phoneNumber.insert(4, ")");
+        speakerList[i].phoneNumber.insert(9, "-");
         // Outputs: (314) 308-1307
-        cout << speakerList[i].phoneNumber;
     }
 }
