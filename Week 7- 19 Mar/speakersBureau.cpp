@@ -17,6 +17,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <iomanip>
 
 using namespace std;
 
@@ -34,10 +35,10 @@ const int numDigits = 10; //phone number length for US numbers
 const int SPEAKERS = 10;  //max Speakers
 
 //Function prototypes
-void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers); //populate the full array of Speakers
-void nameDisplay(Speaker speakerList[], const int &userSpeakers);
-void changeSpeaker(Speaker speakerList[], const int userSpeakers, string userEditName); //Edit details of one speaker
-void displaySpeaker(Speaker speakerList[], int position, string displaySpeakerInfo);    //display a single speaker's info
+void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers);                  //populate the full array of Speakers
+void nameDisplay(Speaker speakerList[], const int &userSpeakers);                              //display current names in the array
+void changeSpeaker(Speaker speakerList[], const int userSpeakers, string userEditName);        //Edit details of one speaker
+void displaySpeaker(Speaker speakerList[], const int userSpeakers, string displaySpeakerInfo); //display details of one speaker
 
 //validator functions
 void nameValidator(Speaker speakerList[], int position);          //Validate names are not empty
@@ -55,7 +56,7 @@ int main()
     Speaker speakerList[SPEAKERS]; //storage array
     int userSpeakers;              //custom number of speakers
     string userEditName;           //for editing a particular speaker
-    string displaySpeakerInfo;     //for displaying a particular speaker
+    string userSpeakerInfo;        //for displaying a particular speaker
 
     //get user input and validate that it's not zero
     cout << "\nHow many speakers do you have? ";
@@ -80,6 +81,14 @@ int main()
     getline(cin, userEditName);
 
     changeSpeaker(speakerList, userSpeakers, userEditName);
+
+    nameDisplay(speakerList, userSpeakers);
+
+    cout << "Which Speaker would you like to display information for? ";
+    cin.clear();
+    getline(cin, userSpeakerInfo);
+
+    displaySpeaker(speakerList, userSpeakers, userSpeakerInfo);
 
     return 0;
 }
@@ -129,6 +138,7 @@ void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers)
     }
 }
 
+//Custom function to show a list of names for users to pick
 void nameDisplay(Speaker speakerList[], const int &userSpeakers)
 {
     cout << "\nThe database currently has the following speakers:" << endl;
@@ -178,12 +188,28 @@ void changeSpeaker(Speaker speakerList[], const int userSpeakers, string userEdi
 iii)Display a specific speaker’s information.The name of the speaker to be displayed will be passed as the third argument.
 */
 
-void displaySpeaker(Speaker speakerList[], int userSpeakers, string displaySpeakerInfo)
+void displaySpeaker(Speaker speakerList[], const int userSpeakers, string displaySpeakerInfo)
 {
-    cout << "\nThe database currently has the following speakers:" << endl;
+    bool found = false;
+    int position;
     for (int i = 0; i < userSpeakers; i++)
     {
-        cout << speakerList[i].name << endl;
+        if (speakerList[i].name.compare(displaySpeakerInfo) == 0)
+        {
+            found = true;
+            position = i;
+        }
+    }
+    if (found)
+    {
+        cout << displaySpeakerInfo << "'s information is:" << endl;
+        cout << "Phone Number: " << speakerList[position].phoneNumber << endl;
+        cout << "Topic: " << speakerList[position].topic << endl;
+        cout << setprecision(2) << fixed << "Fee: $" << speakerList[position].fee << endl;
+    }
+    else
+    {
+        cout << displaySpeakerInfo << " is not in the array. Please check the spelling and try again." << endl;
     }
 }
 
