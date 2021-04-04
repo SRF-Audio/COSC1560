@@ -1,8 +1,8 @@
 //****************************************************************************************************
 //
-// File: speakersBurear.cpp
+// File: speakersBurearDMA.cpp
 // Student: Stephen Froeber
-// Assignment: 7.1
+// Assignment: 7.2
 // Course Name: Programming II
 // Course Number: COSC 1560
 // Due: 19 March 2021
@@ -32,7 +32,6 @@ struct Speaker
 
 //Global Variables
 const int numDigits = 10; //phone number length for US numbers
-const int SPEAKERS = 10;  //max Speakers
 
 //Function prototypes
 void dataEntry(Speaker speakerList[], const int &userSpeakers);                                         //populate the full array of Speakers
@@ -54,12 +53,11 @@ int main()
     cout << "Speaker's Bureau Database" << endl;
 
     //create the storage mechanism for users to edit speakers
-
-    Speaker speakerList[SPEAKERS]; //storage array
-    int userSpeakers;              //custom number of speakers
-    string userEditName;           //for editing a particular speaker
-    string userSpeakerInfo;        //for displaying a particular speaker
-    string userTopicInfo;          //for displaying all speakers with a particular topic
+    Speaker *speakerList = nullptr; //pointer for DAM
+    int userSpeakers;               //custom number of speakers
+    string userEditName;            //for editing a particular speaker
+    string userSpeakerInfo;         //for displaying a particular speaker
+    string userTopicInfo;           //for displaying all speakers with a particular topic
 
     //get user input and validate that it's not zero
     cout
@@ -75,6 +73,8 @@ int main()
         cin >> userSpeakers;
         cin.ignore();
     }
+
+    speakerList = new Speaker[userSpeakers];
 
     dataEntry(speakerList, userSpeakers);
 
@@ -103,6 +103,8 @@ int main()
     getline(cin, userTopicInfo);
 
     displayTopicInfo(speakerList, userSpeakers, userTopicInfo);
+
+    delete speakerList;
 
     return 0;
 }
