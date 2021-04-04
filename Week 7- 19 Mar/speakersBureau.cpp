@@ -25,7 +25,7 @@ struct Speaker
     string name;
     string phoneNumber;
     string topic;
-    double feeRequired;
+    double fee;
 };
 
 void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers);
@@ -60,38 +60,32 @@ int main()
 
 void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers)
 {
-    bool isNumber = true;
+
     int numDigits = 10;
     //populate the structure array with the user selected number of speakers
     for (int i = 0; i < userSpeakers; i++)
     {
         int userDisplay = i + 1;
-        cout << "\nPlease enter the data for Speaker " << userDisplay << ": " << endl;
+        cout << "\nPlease enter the data for Speaker " << userDisplay << "- " << endl;
 
         //name block
         cout << "Speaker " << userDisplay << "'s name: ";
         cin.clear();
         getline(cin, speakerList[i].name);
-        cin.ignore();
 
         //name validation
 
-        if (speakerList[i].name.length() != numDigits)
+        while (speakerList[i].name.length() == 0)
         {
-            while (speakerList[i].name.length() != numDigits)
-            {
-                cout << "\nYou must enter a name: ";
-                cin.clear();
-                getline(cin, speakerList[i].name);
-                cin.ignore();
-            }
+            cout << "\nYou must enter a name: ";
+            cin.clear();
+            getline(cin, speakerList[i].name);
         }
 
         //Phone Number block
         cout << "\nEnter " << speakerList[i].name << "'s phone number (enter 10 digits, with no dashes or hyphens): ";
         cin.clear();
         getline(cin, speakerList[i].phoneNumber);
-        cin.ignore();
 
         //Phone number validation block
 
@@ -103,22 +97,6 @@ void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers)
                 cout << "\nPlease enter exactly 10 digits, with no spaces, hyphens, or parentheses: ";
                 cin.clear();
                 getline(cin, speakerList[i].phoneNumber);
-                cin.ignore();
-            }
-        }
-        //test to make sure they are numbers
-        for (int j = 0; j < speakerList[i].phoneNumber.length(); j++)
-        {
-            if (!isdigit(speakerList[i].phoneNumber.at(j)))
-            {
-                int temp;
-                while (!isdigit(speakerList[i].phoneNumber.at(j)))
-                {
-                    cout << "\nCharacter " << j + 1 << " is not a number. Enter the correct number: ";
-                    cin.clear();
-                    cin >> temp;
-                }
-                speakerList[i].phoneNumber.replace(j, 1, temp);
             }
         }
 
@@ -126,6 +104,31 @@ void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers)
         speakerList[i].phoneNumber.insert(0, "(");
         speakerList[i].phoneNumber.insert(4, ")");
         speakerList[i].phoneNumber.insert(9, "-");
-        // Outputs: (314) 308-1307
+        // Outputs: (314)308-1307
+
+        //Topic block
+        cout << "\nEnter " << speakerList[i].name << "'s speaking topic(s): ";
+        cin.clear();
+        getline(cin, speakerList[i].topic);
+
+        //Topic validation
+        while (speakerList[i].topic.length() == 0)
+        {
+            cout << "\nYou must enter a topic: ";
+            cin.clear();
+            getline(cin, speakerList[i].topic);
+        }
+
+        //Fee block
+        cout << "\nEnter " << speakerList[i].name << "'s speaking fee: $";
+        cin.clear();
+        cin >> speakerList[i].fee;
+
+        //fee validation
+        while (speakerList[i].fee < 0)
+        {
+            cout << "\nThe fee must be a positive dollar amount: $";
+            cin >> speakerList[i].fee;
+        }
     }
 }
