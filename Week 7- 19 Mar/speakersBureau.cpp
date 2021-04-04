@@ -60,7 +60,6 @@ int main()
 
 void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers)
 {
-
     int numDigits = 10;
     //populate the structure array with the user selected number of speakers
     for (int i = 0; i < userSpeakers; i++)
@@ -74,7 +73,6 @@ void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers)
         getline(cin, speakerList[i].name);
 
         //name validation
-
         while (speakerList[i].name.length() == 0)
         {
             cout << "\nYou must enter a name: ";
@@ -88,16 +86,11 @@ void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers)
         getline(cin, speakerList[i].phoneNumber);
 
         //Phone number validation block
-
-        //test for the correct number of digits
-        if (speakerList[i].phoneNumber.length() != numDigits)
+        while (speakerList[i].phoneNumber.length() != numDigits)
         {
-            while (speakerList[i].phoneNumber.length() != numDigits)
-            {
-                cout << "\nPlease enter exactly 10 digits, with no spaces, hyphens, or parentheses: ";
-                cin.clear();
-                getline(cin, speakerList[i].phoneNumber);
-            }
+            cout << "\nPlease enter exactly 10 digits, with no spaces, hyphens, or parentheses: ";
+            cin.clear();
+            getline(cin, speakerList[i].phoneNumber);
         }
 
         //US phone number formatter
@@ -132,3 +125,14 @@ void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers)
         }
     }
 }
+
+/* 
+To do list:
+ii)Change the contents fora particular speaker who is already stored in the array.The name of the speaker being updated will be passed as the third argument.
+
+iii)Display a specific speaker’s information.The name of the speaker to be displayed will be passed as the third argument.
+
+iv)Displaythe people speaking about a specific topic.The name of the specific topic should be passed as the third argument.  All speakers whoare speaking about this topicshould be displayed.  If no speakers are speaking about this topic thenan appropriate message should be displayed.
+
+v)Display all the data stored in the array.
+*/
