@@ -7,7 +7,7 @@
 // Course Number: COSC 1560
 // Due: 19 March
 //
-// This program asks the user to read a file of student data from a disk file and then
+// Stores arrays of Speakers, and allows the user to enter, display and edit them.
 //
 //
 //
@@ -29,17 +29,19 @@ struct Speaker
 };
 
 void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers);
+void changeSpeaker(Speaker speakerList[], const int userSpeakers, string userEditName);
 
 int main()
 {
     cout << "Speaker's Bureau Database" << endl;
 
     //create the storage mechanism for users to edit speakers
-    const int SPEAKERS = 10;
-    Speaker speakerList[SPEAKERS];
-    int userSpeakers;
+    const int SPEAKERS = 10;       //max Speakers
+    Speaker speakerList[SPEAKERS]; //storage array
+    int userSpeakers;              //custom number of speakers
+    string userEditName;           //for editing a particular speaker
 
-    //get user input and validate it
+    //get user input and validate that it's not zero
     cout << "\nHow many speakers do you have? ";
     cin.clear();
     cin >> userSpeakers;
@@ -54,6 +56,15 @@ int main()
     }
 
     dataEntry(speakerList, SPEAKERS, userSpeakers);
+
+    cout << "\nThe database currently has the following speakers:" << endl;
+    for (int i = 0; i < userSpeakers; i++)
+    {
+        cout << speakerList[i].name << endl;
+    }
+    cout << "Which Speaker would you like to edit? " << endl;
+    cin.clear();
+    getline(cin, userEditName);
 
     return 0;
 }
@@ -128,8 +139,26 @@ void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers)
 
 /* 
 To do list:
-ii)Change the contents fora particular speaker who is already stored in the array.The name of the speaker being updated will be passed as the third argument.
 
+Each function shouldaccept an array as the firstargument.  In the first function, the second argument is the current size of the array.  In the other functions, the second argument is the number of speakers currently stored in the array.  Additional arguments may be needed for some functions.
+
+ii)Change the contents fora particular speaker who is already stored in the array.The name of the speaker being updated will be passed as the third argument.
+*/
+
+void changeSpeaker(Speaker speakerList[], const int userSpeakers, string userEditName)
+{
+    int editPosition = 0;
+
+    for (int i = 0; i < userSpeakers; i++)
+    {
+        if (speakerList[i].name.compare(userEditName) == 0)
+        {
+            editPosition = i;
+        }
+    }
+}
+
+/*
 iii)Display a specific speaker’s information.The name of the speaker to be displayed will be passed as the third argument.
 
 iv)Displaythe people speaking about a specific topic.The name of the specific topic should be passed as the third argument.  All speakers whoare speaking about this topicshould be displayed.  If no speakers are speaking about this topic thenan appropriate message should be displayed.
