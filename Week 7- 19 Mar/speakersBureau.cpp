@@ -28,8 +28,10 @@ struct Speaker
     double fee;
 };
 
-void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers);
-void changeSpeaker(Speaker speakerList[], const int userSpeakers, string userEditName);
+void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers);           //populate the full array of Speakers
+void changeSpeaker(Speaker speakerList[], const int userSpeakers, string userEditName); //Edit details of one speaker
+
+void nameValidator(Speaker speakerList[]); //make sure names are not empty
 
 int main()
 {
@@ -83,13 +85,7 @@ void dataEntry(Speaker speakerList[], const int SPEAKERS, int &userSpeakers)
         cin.clear();
         getline(cin, speakerList[i].name);
 
-        //name validation
-        while (speakerList[i].name.length() == 0)
-        {
-            cout << "\nYou must enter a name: ";
-            cin.clear();
-            getline(cin, speakerList[i].name);
-        }
+        nameValidator(speakerList[], i);
 
         //Phone Number block
         cout << "\nEnter " << speakerList[i].name << "'s phone number (enter 10 digits, with no dashes or hyphens): ";
@@ -147,7 +143,7 @@ ii)Change the contents fora particular speaker who is already stored in the arra
 
 void changeSpeaker(Speaker speakerList[], const int userSpeakers, string userEditName)
 {
-    int editPosition = 0;
+    int editPosition;
 
     for (int i = 0; i < userSpeakers; i++)
     {
@@ -156,6 +152,18 @@ void changeSpeaker(Speaker speakerList[], const int userSpeakers, string userEdi
             editPosition = i;
         }
     }
+    cout << "\nEnter the new name for Speaker " << editPosition + 1 << ": ";
+    cin.clear();
+    getline(cin, speakerList[editPosition].name);
+    cout << "\nEnter the new phone number for Speaker " << editPosition + 1 << ": ";
+    cin.clear();
+    getline(cin, speakerList[editPosition].phoneNumber);
+    cout << "\nEnter the new topic for Speaker " << editPosition + 1 << ": ";
+    cin.clear();
+    getline(cin, speakerList[editPosition].topic);
+    cout << "\nEnter the new fee for Speaker " << editPosition + 1 << ": $";
+    cin.clear();
+    cin >> speakerList[editPosition].fee;
 }
 
 /*
@@ -165,3 +173,15 @@ iv)Displaythe people speaking about a specific topic.The name of the specific to
 
 v)Display all the data stored in the array.
 */
+
+//validators
+void nameValidator(Speaker speakerList[], int position)
+{
+    //name validation
+    while (speakerList[position].name.length() == 0)
+    {
+        cout << "\nYou must enter a name: ";
+        cin.clear();
+        getline(cin, speakerList[position].name);
+    }
+}
