@@ -1,11 +1,11 @@
 //****************************************************************************************************
 //
-// File:
+// File: EmployeeData.cpp
 // Student: Stephen Froeber
-// Assignment:
+// Assignment: 8
 // Course Name: Programming II
 // Course Number: COSC 1560
-// Due:
+// Due: 26 Mar 2021
 //
 // This program asks the user to read a file of student data from a disk file and then
 // creates an ordered list of students by student id.
@@ -16,16 +16,33 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
+
 using namespace std;
 
-/*
-a)  Create a dynamically allocated array of 10 Exams.
+//structure declarations
+struct Date
+{
+    int Day;
+    int Month;
+    int Year;
+};
 
-b)  Assign “Chemistry” as the name of the 2nd element of the array.
+struct Employee
+{
+    string Name;
+    int Age;
+    Date DateEmployed;
+};
 
-c)  Set a pointer to the 3rd element of the array, and assign “1/2/2021” as the date of that exam by using the pointer.
-*/
+//function prototypes
 
 int main()
 {
+    //declarations
+    Employee *emp = nullptr; //for dynamic allocation
+    fstream f;               //file data
+    int arraySize;           //stores how many employess are in the file
+
+    f.open("Employees.txt", ios::in | ios::out);
 }
