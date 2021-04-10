@@ -7,11 +7,11 @@
 // Course Number: COSC 1560
 // Due: 26 Mar 2021
 //
-// This program asks the user to read a file of student data from a disk file and then
-// creates an ordered list of students by student id.
+// Reads structures from a file and writes them.
+//
 // Other files required:
-// 1. studentFile.txt – text file of Student data
-// 2. student.h – definition of the Student struct
+// 1. EmployeeData.txt
+//
 //****************************************************************************************************
 
 #include <iostream>
@@ -40,6 +40,7 @@ Employee *readEmployees(const string &empFile, int &numEmps);
 void displayEmployees(const Employee emps[], int numEmps);
 void dateFormatter(const Date date);
 Employee *inputEmployees(Employee *emps, int &numEmps);
+void outputEmployees(const string empFile, Employee *emps, int numEmps);
 
 int main()
 {
@@ -53,6 +54,8 @@ int main()
     displayEmployees(emp, numEmps);
     userEmps = inputEmployees(emp, numEmps);
     displayEmployees(userEmps, numEmps);
+    delete emp;
+    delete userEmps;
 }
 
 //function definitions
@@ -198,3 +201,12 @@ Employee *inputEmployees(Employee *emps, int &numEmps)
 }
 
 //TODO: write the new data to the file, delete pointers, and close it.
+void outputEmployees(const string &empFile, Employee *emps, int &numEmps)
+{
+    fstream f;
+    f.open(empFile, ios::out);
+
+    f.write(reinterpret_cast<char *>(numEmps), sizeof(emps));
+    f.write(reinterpret_cast<char *>(&emps[0]), sizeof(emps));
+    f.close();
+}
