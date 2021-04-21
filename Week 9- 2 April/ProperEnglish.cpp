@@ -17,6 +17,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <cstring>
 using namespace std;
 
 //structure declarations
@@ -49,10 +50,16 @@ void writeTesters(const string &filename, const Person p[], int numP);
 int main()
 {
     //file data
-    fstream translation;
+
     string translateName = "Translation.txt";
-    fstream testers;
     string testersName = "Testers.txt";
+    int translateNum;
+    int testerNum;
+    Translation *translatePtr;
+    Person *testersPtr;
+
+    translatePtr = readTranslation(translateName, translateNum);
+    testersPtr = readTesters(testersName, testerNum);
 
     return 0;
 }
@@ -64,6 +71,20 @@ The ‘Translation.txt’ filenameis passed as an argument, and is openedin the 
 */
 Translation *readTranslation(const string &filename, int &num)
 {
+    //open the file, get the number from the first line, and dynamically allocate the size of the array
+    fstream translation;
+    translation.open(filename, ios::in);
+    translation >> num;
+    Translation *ptr = nullptr;
+    ptr = new Translation[num];
+
+    for (int i = 0; i < num; i++)
+    {
+        getline(translation, ptr[i].american, ',');
+        getline(translation, ptr[i].english, '\n');
+    }
+    translation.close();
+    return ptr;
 }
 
 /*
@@ -71,6 +92,44 @@ The ‘Testers.txt’ filenameis passed as an argument, and is openedin the func
 */
 Person *readTesters(const string &filename, int &num)
 {
+
+    //open the file, get the number from the first line, and dynamically allocate the size of the array
+    fstream testers;
+    Person *testPtr = nullptr;
+    string tempName;
+    testers.open(filename, ios::in);
+    testers >> num;
+
+    //checkpoint
+    cout << num << endl;
+
+    testPtr = new Person[num];
+
+    // for (int i = 0; i < num; i++)
+    // {
+    //Get the name as a string, and convert to characters
+
+    getline(testers, tempName);
+    cout << tempName << endl;
+
+    // char charName[tempName.length() + 1];
+    // strcpy(charName, tempName.c_str());
+
+    // for (int i = 0; i < sizeof(charName); i++)
+    // {
+    //     cout << charName[i];
+    // }
+
+    // strcpy(charName, testPtr[0].name);
+
+    // testers >> testPtr[0].score;
+    // cout << testPtr[0].score;
+    // testers >> testPtr[0].testTaken.day;
+    // testers >> testPtr[0].testTaken.month;
+    // testers >> testPtr[0].testTaken.year;
+    // // }
+    // testers.close();
+    return testPtr;
 }
 
 /*
