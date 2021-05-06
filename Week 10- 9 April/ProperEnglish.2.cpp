@@ -2,10 +2,10 @@
 //
 // File: ProperEnglish.cpp
 // Student: Stephen Froeber
-// Assignment: 9
+// Assignment: 10.2
 // Course Name: Programming II
 // Course Number: COSC 1560
-// Due: 2 April, 2020
+// Due: 9 April, 2020
 //
 // British to American English translator
 //
@@ -67,6 +67,12 @@ int main()
     testingOptions(translatePtr, translateNum, testersPtr, testerNum);
     displayTesters(testersPtr, testerNum);
     writeTesters(testersName, testersPtr, testerNum);
+    /*TODO
+
+
+
+
+    */
 
     return 0;
 }
@@ -107,6 +113,9 @@ Person *readTesters(const string &filename, int &num)
     testers >> num;
     testers.get();
 
+    //checkpoint
+    cout << num << endl;
+
     testPtr = new Person[num];
 
     //loop through text file data
@@ -120,7 +129,6 @@ Person *readTesters(const string &filename, int &num)
         testers >> testPtr[i].testTaken.month;
         testers.get();
         testers >> testPtr[i].testTaken.year;
-        testers.get();
     }
 
     testers.close();
@@ -211,9 +219,9 @@ void displayTesters(const Person p[], int numP)
     cout << "The testers in the database have the following information:" << endl;
     for (int i = 0; i < numP; i++)
     {
-        cout << "\nPerson " << i + 1 << " name: " << p[i].name << endl;
-        cout << "Most recent test score: " << p[i].score << endl;
-        cout << "Test date: " << p[i].testTaken.day << "/" << p[i].testTaken.month << "/" << p[i].testTaken.year;
+        cout << "\nPerson " << i + 1 << " name: " << p->name << endl;
+        cout << "Most recent test score: " << p->score << endl;
+        cout << "Test date: " << p->testTaken.day << "/" << p->testTaken.month << "/" << p->testTaken.year;
     }
 }
 
@@ -226,12 +234,16 @@ void writeTesters(const string &filename, const Person p[], int numP)
     fstream testers;
 
     testers.open(filename, ios::out);
-    testers << numP << endl;
+    testers << numP;
+    testers.get();
+
+    //checkpoint
+    cout << numP << endl;
 
     //loop through text file data
     for (int i = 0; i < numP; i++)
     {
-        testers << p[i].name << endl;
+        testers << sizeof(p[i].name) << endl;
         testers << p[i].score << ",";
         testers << p[i].testTaken.day << "/";
         testers << p[i].testTaken.month << "/";
