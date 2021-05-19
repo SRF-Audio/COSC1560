@@ -71,30 +71,27 @@ void Sport::setNextGameDate()
     cout << "\nDay: ";
     cin >> d.day;
     //setNextGameDate() day validator
-    while (d.day > 31 || d.day < 1)
+    if (d.day > 31 || d.day < 1)
     {
-        cout << "\nThe day must be a valid calendar date: ";
-        cin >> d.day;
+        d.day = 1;
     }
 
     //setNextGameDate() month
     cout << "\nMonth: ";
     cin >> d.month;
     //setNextGameDate() month validator
-    while (d.month > 12 || d.month < 1)
+    if (d.month > 12 || d.month < 1)
     {
-        cout << "\nThe month must be between 1-12: ";
-        cin >> d.month;
+        d.month = 1;
     }
 
     //setNextGameDate() year
     cout << "\nYear: ";
     cin >> d.year;
     //setNextGameDate() year validator
-    while (d.year < 2021)
+    if (d.year < 2021)
     {
-        cout << "\nThe year must be this year, or in the future: ";
-        cin >> d.year;
+        d.year = 2000;
     }
     next = d;
 }
@@ -106,10 +103,9 @@ void Sport::setTeams()
     cout << "\nPlease enter the number of teams participating in the sport: ";
     cin >> t;
     //setTeams() validator
-    while (t < 1)
+    if (t < 1)
     {
-        cout << "\nYou must enter at least one team: ";
-        cin >> t;
+        t = 5;
     }
     teams = t;
 }

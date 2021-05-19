@@ -19,15 +19,15 @@
 #include <fstream>
 #include <ios>
 #include <string>
+
 using namespace std;
 
 //function prototypes
-int mainMenu();
-void readNames(ifstream &, string[], int);
-void displayNames(const string[], int);
-int searchNames(const string[], int, const string &);
-void bubbleSort(string[], int);
-void bubbleSortDescending(string[], int);
+void readNames(ifstream &inputFile, string names[], int numNames);
+void displayNames(const string names[], int numNames);
+int searchNames(const string names[], int numNames, const string &name);
+void bubbleSort(string names[], int numNames);
+void bubbleSortDescending(string names[], int numNames);
 int binarySearchNames(const string[], int, const string &);
 void selectionSort(string[], int);
 void selectionSortDescending(string[], int);
@@ -44,7 +44,7 @@ int main()
     string searchName;                          //store the name, input by user
     string namesBubbleSort[ARR_SIZE];           //stores the ascending sort names
     string namesBubbleSortDescending[ARR_SIZE]; //stores the descending sort
-    int arrayIndex = -1;                        //store the index position of the found name, default "false"
+    int arrayIndex;                             //store the index position of the found name, default "false"
 
     //User communication
     cout << "Welcome to the Name Search Application" << endl;
@@ -59,6 +59,7 @@ int main()
 
     //user input to search
     cout << "\nPlease enter a name: ";
+    cin.clear();
     getline(cin, searchName);
 
     //pass user input to search

@@ -44,8 +44,9 @@ struct Person
 Translation *readTranslation(const string &filename, int &num);
 Person *readTesters(const string &filename, int &num);
 void takeTest(const Translation t[], int numT, Person &p);
+void testersUpdates(const Translation t[], int numT, const string &fileName);
 void testingOptions(const Translation t[], int numT, Person people[], int numP);
-void displayTesters(const Person p[], int numP);
+void displayTesters(const string &fileName);
 void writeTesters(const string &filename, const Person p[], int numP);
 
 int main()
@@ -176,6 +177,37 @@ void takeTest(const Translation t[], int numT, Person &p)
     p.score = average;
 }
 
+void testersUpdates(const Translation t[], int numT, const string &fileName)
+{
+    fstream testers;
+    int numP;
+    Person p[3];
+    Date currentDate;
+    testers.open(fileName, ios::in | ios::out | ios::binary);
+    testers >> numP;
+    srand(time(0));
+
+    cout << "Please enter the current date- " << endl;
+    cout << "Day: ";
+    cin >> currentDate.day;
+    cout << "\nMonth: ";
+    cin >> currentDate.month;
+    cout << "\nYear: ";
+    cin >> currentDate.year;
+
+    for (int i = 0; i < 3; i++)
+    {
+
+        int randomNum = rand() % numP + 1;
+        testers.seekg((sizeof(Person) * randomNum + 4), ios::beg);
+        testers.read(reinterpret_cast<char *>(&p[i]), sizeof(p));
+        takeTest(t, numT, p[i]);
+        p[i].testTaken.day = currentDate.day;
+        p[i].testTaken.month = currentDate.month;
+        p[i].testTaken.year = currentDate.year;
+    }
+}
+
 /*
 The two arrays, created in the previous two functions,are passed as arguments, along with the numbers in each array.  Prompt the user to enter the current Date, so that it can be usedfor any updates.  Generate three random numbers, in the range 0 to ‘numP-1’.  For each of these numbers, the ‘takeTest’ function should be called for that person.  Their score will then be updatedin the ‘takeTest’ function.  Then their‘testTaken’ datecan be updated.
 */
@@ -206,14 +238,21 @@ void testingOptions(const Translation t[], int numT, Person people[], int numP)
 /*
 The current information in the Person array should be displayed in a well - designedformat.
 */
-void displayTesters(const Person p[], int numP)
+void displayTesters(const string &fileName)
 {
-    cout << "The testers in the database have the following information:" << endl;
-    for (int i = 0; i < numP; i++)
+    fstream f;
+    int size;
+    Person p;
+    f.open(fileName, ios::in | ios::binary);
+    f >> size;
+    f.get();
+
+    f.read(reinterpret_cast<char *>(&p), sizeof(p));
+    while (!f.eof())
     {
-        cout << "\nPerson " << i + 1 << " name: " << p[i].name << endl;
-        cout << "Most recent test score: " << p[i].score << endl;
-        cout << "Test date: " << p[i].testTaken.day << "/" << p[i].testTaken.month << "/" << p[i].testTaken.year;
+        cout << "Name: " << p.name << endl;
+        cout << "Score: " << p.score << endl;
+        cout << "Test Taken: " << p.testTaken.day << "/" << p.testTaken.month << "/" << p.testTaken.year;
     }
 }
 
